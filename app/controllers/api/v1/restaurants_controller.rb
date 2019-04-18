@@ -32,10 +32,17 @@ class Api::V1::RestaurantsController < Api::V1::BaseController
   end
 
   def comment
+    p 'before comment params'
+    p comment_params
+    p 'before new comment'
     @comment = Comment.new(comment_params)
-    @comment.restaurant = Restaurant.find(params[:restaurant_id])
+    p 'after new comment'
+    p @comment
+    @comment.restaurant = Restaurant.find(comment_params[:restaurant_id])
+    p 'after restaurant'
     if @comment.save
-      render :show, status: :created
+      p 'okay'
+      render json: {success: true}
     else
       render_error_comment
     end
